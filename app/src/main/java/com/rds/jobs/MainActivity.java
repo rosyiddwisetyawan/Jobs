@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+
+import static com.bumptech.glide.request.RequestOptions.centerCropTransform;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,8 +22,12 @@ public class MainActivity extends AppCompatActivity {
 
         img = (ImageView)findViewById(R.id.idsplash);
         Glide.with(getApplicationContext())
-                .asBitmap()
-                .load("https://firebasestorage.googleapis.com/v0/b/project-f01c1.appspot.com/o/LogoMakr_6Q2Nbz.png?alt=media&token=8e9966cf-cb3e-4ed8-b3c2-4735dbf171de")
+                .load("https://s3-ap-southeast-1.amazonaws.com/ricebowl/employers/4913.png")
+                .apply(centerCropTransform()
+                        .override(200, 200)
+                        .placeholder(R.drawable.thumbnailimage)
+                        .error(R.drawable.thumbnailimage)
+                        .priority(Priority.HIGH))
                 .into(img);
         new Handler().postDelayed(new Runnable() {
             @Override

@@ -3,6 +3,7 @@ package com.rds.jobs.fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -51,6 +52,7 @@ public class ForYouFragment extends Fragment {
     String dates, returndates;
     DBHelper db;
     String matauang;
+    private boolean manageVisibility;
     public ForYouFragment() {
         // Required empty public constructor
     }
@@ -67,19 +69,10 @@ public class ForYouFragment extends Fragment {
     }
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            // do something when visible.
-            Log.i("AKU","MIKIR");
-        }
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View view =  inflater.inflate(R.layout.fragment_for_you, container, false);
+        final  View view =  inflater.inflate(R.layout.fragment_for_you, container, false);
 
         list = new ArrayList<>();
 
