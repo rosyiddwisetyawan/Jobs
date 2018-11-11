@@ -1,6 +1,7 @@
 package com.rds.jobs;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 Intent m = new Intent(MainActivity.this,MenuActivity.class);
                 startActivity(m);
-
             }
         },SPLASH_TIME_OUT);
     }

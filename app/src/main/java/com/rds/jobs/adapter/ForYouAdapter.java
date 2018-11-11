@@ -82,7 +82,6 @@ public class ForYouAdapter extends RecyclerView.Adapter<ForYouAdapter.ViewHolder
         holder.love.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String a = jobs.getId();
                 Jobs jobSaved = new Jobs();
                 jobSaved.setMatauang(jobs.getMatauang());
                 jobSaved.setGajiawal(jobs.getGajiawal());

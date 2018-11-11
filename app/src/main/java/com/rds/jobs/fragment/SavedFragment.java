@@ -163,7 +163,7 @@ public class SavedFragment extends Fragment {
             myWish.setId(id);
             myWish.setImage(image);
             myWish.setCompany(company);
-            myWish.setDate(date);
+            myWish.setDate("Posted "+date+" days ago");
             myWish.setPosition(position);
             myWish.setJobtype(jobtype);
             myWish.setCity(city);

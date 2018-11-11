@@ -66,6 +66,7 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.ViewHolder> 
         holder.position.setText(jobs.getPosition());
         holder.jobtype.setText("* "+jobs.getJobtype());
         holder.city.setText("* "+jobs.getCity());
+        holder.love.setImageResource(R.drawable.ic_action_favorite_true);
 
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +109,7 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        ImageView love;
         ImageView delete;
         ImageButton centerimage;
         TextView companyname;
@@ -119,6 +121,7 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.ViewHolder> 
 
         public ViewHolder(View itemView) {
             super(itemView);
+            love = itemView.findViewById(R.id.love);
             centerimage = itemView.findViewById(R.id.centerimage);
             delete = itemView.findViewById(R.id.delete);
             companyname = itemView.findViewById(R.id.companyname);

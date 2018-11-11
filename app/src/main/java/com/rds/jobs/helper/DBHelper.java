@@ -152,7 +152,7 @@ public class DBHelper extends SQLiteOpenHelper {
         // Cursor cursor = db.rawQuery(selectQuery, null);
 
         Cursor cursor = db.query(TABLE_NAME, new String[]{CURRENCY, MIN, MAX, KEY_ID, CONTENT_IMAGE, CONTENT_COMPANY, DATE,
-                POSITION, JOBTYPE, CITY, URL, DESCRIPTION, RESPONSIBILITY, REQUIREMENT}, null, null, null, null, null);
+                POSITION, JOBTYPE, CITY, URL, DESCRIPTION, RESPONSIBILITY, REQUIREMENT}, null, null, null, null, DATE+" ASC");
 
         //loop through cursor
         if (cursor.moveToFirst()) {
