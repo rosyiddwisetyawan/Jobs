@@ -36,6 +36,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -130,38 +132,45 @@ public class ForYouFragment extends Fragment {
                                 }else {
                                     returndates = "Posted "+dates.toString()+" days ago";
                                 }
-                                JSONObject name = jsonObject.getJSONObject("salary");
-                                if(name!=null) {
-                                    String currency = name.getString("currency");
-                                    if (currency.equalsIgnoreCase("USD")) {
-                                        matauang = "$";
-                                    } else if (currency.equalsIgnoreCase("SGD")) {
-                                        matauang = "$";
 
-                                    } else if (currency.equalsIgnoreCase("IDR")) {
-                                        matauang = "Rp.";
+                                String aku = jsonObject.getString("salary");
 
-                                    } else if (currency.equalsIgnoreCase("EUR")) {
-                                        matauang = "€";
+                                if(aku.contains("[")){
+                                    JSONArray arr = jsonObject.getJSONArray("salary");
 
-                                    } else {
-                                        matauang = currency;
+                                }else{
+                                    JSONObject name = jsonObject.getJSONObject("salary");
+                                    if(name!=null) {
+                                        String currency = name.getString("currency");
+                                        if (currency.equalsIgnoreCase("USD")) {
+                                            matauang = "$";
+                                        } else if (currency.equalsIgnoreCase("SGD")) {
+                                            matauang = "$";
+
+                                        } else if (currency.equalsIgnoreCase("IDR")) {
+                                            matauang = "Rp.";
+
+                                        } else if (currency.equalsIgnoreCase("EUR")) {
+                                            matauang = "€";
+
+                                        } else {
+                                            matauang = currency;
+                                        }
+
+                                        jobs.setMatauang(matauang);
+                                        jobs.setGajiawal(name.getString("minimum"));
+                                        jobs.setGajiakhir(name.getString("maximum"));
+                                    }else {
+                                        jobs.setMatauang("null");
+                                        jobs.setGajiawal("null");
+                                        jobs.setGajiakhir("null");
                                     }
-
-                                    jobs.setMatauang(matauang);
-                                    jobs.setGajiawal(name.getString("minimum"));
-                                    jobs.setGajiakhir(name.getString("maximum"));
-                                }else {
-                                    jobs.setMatauang("null");
-                                    jobs.setGajiawal("null");
-                                    jobs.setGajiakhir("null");
                                 }
-
 
                                 jobs.setId(jsonObject.getString("id"));
                                 jobs.setImage(jsonObject.getString("logo"));
                                 jobs.setCompany(jsonObject.getString("company_name"));
-                                jobs.setDate("Posted "+dates.toString()+" days ago");
+                                jobs.setDate(dates.toString());
                                 jobs.setPosition(jsonObject.getString("job_title"));
                                 jobs.setJobtype(jsonObject.getString("job_type"));
                                 jobs.setCity(jsonObject.getString("city"));
@@ -170,7 +179,15 @@ public class ForYouFragment extends Fragment {
                                 jobs.setResponsibility(jsonObject.getString("responsibility"));
                                 jobs.setRequirement(jsonObject.getString("requirement"));
                                 list.add(jobs);
+
                             }
+
+                            Collections.sort(list, new Comparator<Jobs>() {
+                                @Override
+                                public int compare(Jobs lhs, Jobs rhs) {
+                                    return lhs.getDate().compareTo(rhs.getDate());
+                                }
+                            });
 
                         } catch (JSONException e) {
                             e.printStackTrace();

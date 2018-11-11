@@ -28,6 +28,7 @@ import com.rds.jobs.fragment.SavedFragment;
 import com.rds.jobs.helper.DBHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -52,6 +53,7 @@ public class ForYouAdapter extends RecyclerView.Adapter<ForYouAdapter.ViewHolder
         this.context = context;
         this.list = list;
     }
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -120,7 +122,7 @@ public class ForYouAdapter extends RecyclerView.Adapter<ForYouAdapter.ViewHolder
         });
 
         holder.companyname.setText(jobs.getCompany());
-        holder.date.setText(jobs.getDate());
+        holder.date.setText("Posted "+jobs.getDate()+" days ago");
         holder.position.setText(jobs.getPosition());
         holder.jobtype.setText("* "+jobs.getJobtype());
         holder.city.setText("* "+jobs.getCity());
