@@ -1,8 +1,11 @@
 package com.rds.jobs;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -12,10 +15,20 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.robertsimoes.shareable.Shareable;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
 import static com.bumptech.glide.request.RequestOptions.centerCropTransform;
 
 public class GaleryActivity extends AppCompatActivity {
 
+    private ArrayList<String> mBlogTitleList = new ArrayList<>();
+    String Mrespon,Mrequi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +63,12 @@ public class GaleryActivity extends AppCompatActivity {
     private void setData(String Mcurrency, String Mmin, String Mmax, String Mid, String Mimage, String Mcompany, String Mdate,
                          String Mposition, String Mjobtype, String Mcity,
                          final String Murl, String Mdescription, String Mresponsibility, String Mrequirement){
+
+        Mresponsibility = scrapping(Mresponsibility);
+        Log.i("RES",Mresponsibility);
+
+        Mrequirement = scrapping(Mrequirement);
+        Log.i("RES",Mrequirement);
 
         TextView currency = findViewById(R.id.detailcur1);
         currency.setText(Mcurrency);
@@ -238,5 +257,72 @@ public class GaleryActivity extends AppCompatActivity {
                 .url(message)
                 .build();
         shareInstance.share();
+    }
+
+//    private class Description extends AsyncTask<Void, Void, Void> {
+//        String desc;
+//
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//            mProgressDialog = new ProgressDialog(GaleryActivity.this);
+//            mProgressDialog.setTitle("Android Basic JSoup Tutorial");
+//            mProgressDialog.setMessage("Loading...");
+//            mProgressDialog.setIndeterminate(false);
+//            mProgressDialog.show();
+//        }
+//
+//        @Override
+//        protected Void doInBackground(Void... params) {
+//            try {
+//                // Connect to the web site
+//                Document mBlogDocument = Jsoup.connect(url).get();
+//                // Using Elements to get the Meta data
+//                Elements mElementDataSize = mBlogDocument.select("div[class=author-date]");
+//                // Locate the content attribute
+//                int mElementSize = mElementDataSize.size();
+//
+//                for (int i = 0; i < mElementSize; i++) {
+//                    Elements mElementAuthorName = mBlogDocument.select("span[class=vcard author post-author test]").select("a").eq(i);
+//                    String mAuthorName = mElementAuthorName.text();
+//
+//                    Elements mElementBlogUploadDate = mBlogDocument.select("span[class=post-date updated]").eq(i);
+//                    String mBlogUploadDate = mElementBlogUploadDate.text();
+//
+//                    Elements mElementBlogTitle = mBlogDocument.select("h2[class=entry-title]").select("a").eq(i);
+//                    String mBlogTitle = mElementBlogTitle.text();
+//
+//                    mAuthorNameList.add(mAuthorName);
+//                    mBlogUploadDateList.add(mBlogUploadDate);
+//                    mBlogTitleList.add(mBlogTitle);
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            return null;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Void result) {
+//            // Set description into TextView
+//
+//
+//            mProgressDialog.dismiss();
+//        }
+//    }
+
+    public String scrapping(String url){
+        Document doc = Jsoup.parse(url);
+        Elements ul = doc.select("ul");
+        Elements li = ul.select("li"); // select all li from ul
+        StringBuffer sb = new StringBuffer("");
+
+        for (int i = 0; i < li.size(); i++) {
+            sb.append("- "+li.get(i).text()+"\n");
+        }
+        String ret = sb.toString();
+        System.out.println(ret);
+        Log.d("jsoup", "size: " + li.size());
+        return ret;
     }
 }

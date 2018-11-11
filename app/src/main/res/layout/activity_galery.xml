@@ -128,7 +128,6 @@
                                 android:id="@+id/sos_fb"
                                 android:layout_margin="10dp">
                                 <ImageView
-                                    android:background="@drawable/btnsos"
                                     android:id="@+id/imgfb"
                                     android:layout_marginTop="5dp"
                                     android:layout_width="40dp"
@@ -142,7 +141,6 @@
                                 android:id="@+id/sos_twitter"
                                 android:orientation="horizontal">
                                 <ImageView
-                                    android:background="@drawable/btnsos"
                                     android:id="@+id/imgtwitter"
                                     android:layout_marginTop="5dp"
                                     android:layout_width="40dp"
@@ -156,7 +154,6 @@
                                 android:id="@+id/sos_linked"
                                 android:orientation="horizontal">
                                 <ImageView
-                                    android:background="@drawable/btnsos"
                                     android:id="@+id/imglinked"
                                     android:layout_marginTop="5dp"
                                     android:layout_width="40dp"
@@ -170,7 +167,6 @@
                                 android:id="@+id/sos_plus"
                                 android:orientation="horizontal">
                                 <ImageView
-                                    android:background="@drawable/btnsos"
                                     android:id="@+id/imgplus"
                                     android:layout_marginTop="5dp"
                                     android:layout_width="40dp"
@@ -184,7 +180,6 @@
                                 android:id="@+id/sos_message"
                                 android:orientation="horizontal">
                                 <ImageView
-                                    android:background="@drawable/btnsos"
                                     android:id="@+id/imgmessage"
                                     android:layout_marginTop="5dp"
                                     android:layout_width="40dp"
@@ -208,6 +203,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
+                    android:layout_marginBottom="15dp"
+                    android:textStyle="bold"
                     android:layout_centerHorizontal="true"
                     android:id="@+id/detailabout"
                     android:layout_width="wrap_content"
@@ -232,7 +229,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
-                    android:padding="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:textStyle="bold"
                     android:text="What you will do"
                     android:layout_centerHorizontal="true"
                     android:id="@+id/whatyou"
@@ -258,7 +256,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
-                    android:padding="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:textStyle="bold"
                     android:text="Requeirement"
                     android:layout_centerHorizontal="true"
                     android:id="@+id/requeirement"
@@ -274,7 +273,7 @@
             <RelativeLayout
                 android:layout_below="@id/rel5"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"></RelativeLayout>
+                android:layout_height="50dp"></RelativeLayout>
 
         </RelativeLayout>
     </ScrollView>
