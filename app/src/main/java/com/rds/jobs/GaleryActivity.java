@@ -259,6 +259,7 @@ public class GaleryActivity extends AppCompatActivity {
         shareInstance.share();
     }
 
+
     public String scrapping(String url){
         Document doc = Jsoup.parse(url);
         Elements ul = doc.select("ul");
