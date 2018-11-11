@@ -38,13 +38,14 @@ public class SavedFragment extends Fragment {
     private DBHelper dba;
     Boolean isScroll = false;
     int currentItem, totalItem, scrollItem;
+    View vi;
 
     public SavedFragment() {
         // Required empty public constructor
     }
 
 
-    public static SavedFragment newInstance(String param1, String param2) {
+    public static SavedFragment newInstance() {
         SavedFragment fragment = new SavedFragment();
         return fragment;
     }
@@ -59,13 +60,13 @@ public class SavedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View view = inflater.inflate(R.layout.fragment_saved, container, false);
+        vi = inflater.inflate(R.layout.fragment_saved, container, false);
 
         dbWishes = new ArrayList<>();
         refreshData();
         savedAdapter = new SavedAdapter(getContext(), dbWishes);
 
-        RecyclerView recyclerViewtop = (RecyclerView) view.findViewById(R.id.recycler_view);
+        RecyclerView recyclerViewtop = (RecyclerView) vi.findViewById(R.id.recycler_view);
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(NUM_COLUMNS, LinearLayoutManager.VERTICAL);
         recyclerViewtop.setAdapter(savedAdapter);
         recyclerViewtop.setLayoutManager(staggeredGridLayoutManager);
@@ -91,15 +92,52 @@ public class SavedFragment extends Fragment {
                 }
             }
         });
-        return view;
+        return vi;
+    }
+
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(false);
+        if (isVisibleToUser) {
+            View view = vi ;
+
+            dbWishes = new ArrayList<>();
+            refreshData();
+            savedAdapter = new SavedAdapter(getContext(), dbWishes);
+
+            RecyclerView recyclerViewtop = (RecyclerView) view.findViewById(R.id.recycler_view);
+            StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(NUM_COLUMNS, LinearLayoutManager.VERTICAL);
+            recyclerViewtop.setAdapter(savedAdapter);
+            recyclerViewtop.setLayoutManager(staggeredGridLayoutManager);
+            recyclerViewtop.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                    if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                        isScroll = true;
+                        //fetchData();
+                    }
+                }
+
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    currentItem = new LinearLayoutManager(getActivity()).getChildCount();
+                    totalItem = new LinearLayoutManager(getActivity()).getItemCount();
+                    scrollItem = new LinearLayoutManager(getActivity()).findFirstVisibleItemPosition();
+
+                    if (isScroll && (currentItem + scrollItem == totalItem)) {
+                        isScroll = false;
+                    }
+                }
+            });
+
+        }
     }
 
     private void refreshData() {
         dbWishes.clear();
         dba = new DBHelper(getContext());
-
         List<JobsWish> wishesFromDB = dba.getWishes();
-        Log.i("TESTID",String.valueOf(wishesFromDB.size()));
 
         for (int i = 0; i < wishesFromDB.size(); i++) {
 
@@ -117,8 +155,6 @@ public class SavedFragment extends Fragment {
             String description = wishesFromDB.get(i).getDescription();
             String responsibility = wishesFromDB.get(i).getResponsibility();
             String requirement = wishesFromDB.get(i).getRequirement();
-
-            //Log.v("IDs: " , String.valueOf(mid));
 
             JobsWish myWish = new JobsWish();
             myWish.setMatauang(currency);
@@ -139,7 +175,6 @@ public class SavedFragment extends Fragment {
             dbWishes.add(myWish);
 
         }
-        Log.i("IKI",String.valueOf(dbWishes.size()));
         dba.close();
     }
 
