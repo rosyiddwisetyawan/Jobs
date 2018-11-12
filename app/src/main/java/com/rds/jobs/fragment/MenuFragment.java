@@ -1,23 +1,35 @@
 package com.rds.jobs.fragment;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.JobIntentService;
 import android.support.v4.view.ViewPager;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.rds.jobs.R;
 import com.rds.jobs.adapter.ViewPagerAdapter;
+import com.rds.jobs.data.Jobs;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MenuFragment extends Fragment {
 
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private EditText edt;
 
     public MenuFragment() {
         // Required empty public constructor
@@ -42,6 +54,24 @@ public class MenuFragment extends Fragment {
 
         tabLayout = (TabLayout)view.findViewById(R.id.idtab2);
         viewPager = (ViewPager)view.findViewById(R.id.idview2);
+        edt = (EditText)view.findViewById(R.id.edtsearch);
+        edt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.clearData();
         adapter.addFragment(new ForYouFragment(),"For You");

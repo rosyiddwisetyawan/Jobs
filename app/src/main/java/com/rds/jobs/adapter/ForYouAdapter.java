@@ -157,6 +157,12 @@ public class ForYouAdapter extends RecyclerView.Adapter<ForYouAdapter.ViewHolder
         return list.size();
     }
 
+    public void filter(List<Jobs> filter){
+        list = filter;
+        notifyDataSetChanged();
+
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView love;

@@ -1,6 +1,7 @@
 package com.rds.jobs.fragment;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,12 +9,15 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -24,6 +28,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.rds.jobs.R;
 import com.rds.jobs.adapter.ForYouAdapter;
+import com.rds.jobs.adapter.SavedAdapter;
 import com.rds.jobs.data.Jobs;
 import com.rds.jobs.helper.DBHelper;
 
@@ -54,6 +59,7 @@ public class ForYouFragment extends Fragment {
     String dates, returndates;
     DBHelper db;
     String matauang;
+    View vi;
     private boolean manageVisibility;
     public ForYouFragment() {
         // Required empty public constructor
@@ -74,7 +80,7 @@ public class ForYouFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final  View view =  inflater.inflate(R.layout.fragment_for_you, container, false);
+        vi =  inflater.inflate(R.layout.fragment_for_you, container, false);
 
         list = new ArrayList<>();
 
@@ -82,7 +88,7 @@ public class ForYouFragment extends Fragment {
 
         getData();
 
-        RecyclerView recyclerViewtop = (RecyclerView) view.findViewById(R.id.recycler_view);
+        RecyclerView recyclerViewtop = (RecyclerView) vi.findViewById(R.id.recycler_view);
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(NUM_COLUMNS, LinearLayoutManager.VERTICAL);
         recyclerViewtop.setAdapter(forYouAdapter);
         recyclerViewtop.setLayoutManager(staggeredGridLayoutManager);
@@ -109,7 +115,19 @@ public class ForYouFragment extends Fragment {
             }
         });
 
-        return view;
+        return vi;
+    }
+
+    public void filter(String text) {
+        //new array list that will hold the filtered data
+        List<Jobs> temp = new ArrayList();
+        for(Jobs p: list){
+            if(p.getCompany().toLowerCase().contains(text.toLowerCase())){
+                temp.add(p);
+            }
+        }
+        //update recyclerview
+        forYouAdapter.filter(temp);
     }
 
     private void getData() {
