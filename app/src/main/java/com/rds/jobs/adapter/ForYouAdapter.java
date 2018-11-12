@@ -61,7 +61,7 @@ public class ForYouAdapter extends RecyclerView.Adapter<ForYouAdapter.ViewHolder
         ForYouAdapter.ViewHolder holder = new ForYouAdapter.ViewHolder(view);
         context = parent.getContext();
         arrPackage = new ArrayList<>();
-        shared = context.getApplicationContext().getSharedPreferences("Adobe", 0);
+        shared = context.getApplicationContext().getSharedPreferences("JOBS", 0);
         dbHelper = new DBHelper(context);
         return holder;
     }
