@@ -137,8 +137,6 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         row.moveToFirst();
         int count = row.getCount();
-        Log.i("QUERY", query.toString());
-        Log.i("COUNT",String.valueOf(count));
         return status;
     }
     //Get all wishes
